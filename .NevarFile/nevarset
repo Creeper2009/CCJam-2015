@@ -1,0 +1,16 @@
+{
+  superSerious = true,
+  bypassWindow = true,
+  rememberTab = true,
+  menuBar = true,
+  multiline = true,
+  tabsBar = true,
+  autoIndent = true,
+  autoAddClosers = true,
+  syntaxHL = true,
+  lineWrap = false,
+  lineNBar = true,
+  funcHelp = false,
+  autoErrChk = false,
+  xScroll = 1,
+}

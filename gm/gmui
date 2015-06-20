@@ -1,0 +1,52 @@
+--
+-- gmui
+-- an API coded by me (thenextntnick) for
+-- gm (goal manager), a program for CCJam 2015.
+-- License: MIT.
+--
+
+-- element format:
+-- {string elementName, table elementParams}
+local elementTypes = {
+  "text"
+}
+local views = {}
+
+-- element renderers
+local elementRenderers = {
+  text = function(params)
+    if(not params.text) then error("gmui.elementRenderers.text: No text found",1) end
+    local cX, cY = term.getCursorPos()
+    -- "colour" support for you people who
+    -- use British English
+    if(params.bgColor or params.bgColour) then term.setBackgroundColor(params.bgColor or params.bgColour) end
+    if(params.fgColor or params.fgColour) then term.setTextColor(params.fgColor or params.fgColour) end
+    term.setCursorPos(params.x or cX, params.y or cY)
+    term.write(params.text)
+  end
+}
+
+function loadViewsFromDir(dir)
+  local list = fs.list(dir)
+  print(textutils.serialize(list))
+  for _, file in ipairs(list) do
+    local newpth
+    if(dir:sub(#dir,#dir) ~= "/") then newpth = dir.."/"..file end
+    if(not fs.isDir(newpth)) then
+      local b = fs.open(newpth,"r")
+      views[fs.getName(newpth)] = textutils.unserialize(b.readAll())
+      b.close()
+    end
+  end
+  --for i,v in pairs(views) do print(i,v) end
+  print(textutils.serialize(views))
+end
+
+function render(view)
+  for i=1,#views[view] do
+    local element = views[view][i]
+    if(elementTypes[element[1]]) then
+      elementRenderers[element[1]](element[2])
+    end
+  end
+end

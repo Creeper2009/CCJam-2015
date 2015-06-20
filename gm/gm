@@ -1,0 +1,17 @@
+--
+-- gm (Goal Manager)
+-- by thenextntnick
+--
+-- Made for CCJam 2015
+-- License: MIT
+--
+
+if(not fs.exists(".gm_data")) then
+  -- Open .gm_data file
+  gm_data = fs.open(shell.resolve(".gm_data"),"a")
+  --gmui.render("noData")
+end
+
+
+-- Close the .gm_data file we opened earlier
+gm_data.close()
